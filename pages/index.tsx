@@ -30,6 +30,12 @@ const Home: FC = () => {
   useEffect(() => {
     const canvas = document.createElement('canvas');
     canvas.id = 'backgroundCanvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
     document.body.appendChild(canvas);
     const gl = canvas.getContext('webgl');
 
@@ -48,9 +54,10 @@ const Home: FC = () => {
     const fragmentShaderSource = `
       precision mediump float;
       uniform float u_time;
+      uniform vec2 u_resolution;
       void main() {
-        vec2 st = gl_FragCoord.xy / vec2(800.0, 600.0);
-        float color = 0.5 + 0.5 * sin(st.x * 10.0 + u_time);
+        vec2 st = gl_FragCoord.xy / u_resolution;
+        float color = 0.5 + 0.5 * sin(st.x * 10.0 + u_time - u_time * 0.1);
         gl_FragColor = vec4(vec3(color), 1.0);
       }
     `;
@@ -72,6 +79,7 @@ const Home: FC = () => {
 
     const positionLocation = gl.getAttribLocation(program, 'a_position');
     const timeLocation = gl.getUniformLocation(program, 'u_time');
+    const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -89,6 +97,7 @@ const Home: FC = () => {
 
     function render(time) {
       gl.uniform1f(timeLocation, time * 0.001);
+      gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       requestAnimationFrame(render);
     }
