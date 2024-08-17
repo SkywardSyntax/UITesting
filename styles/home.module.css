@@ -2,8 +2,12 @@
   padding: 20px 20px 60px;
   max-width: 680px;
   margin: 0 auto;
-  background-color: #121212; /* Dark background color */
-  color: #e0e0e0; /* Light text color */
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  backdrop-filter: blur(10px) brightness(1.2);
+  -webkit-backdrop-filter: blur(10px) brightness(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 .hr {

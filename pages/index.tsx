@@ -57,8 +57,11 @@ const Home: FC = () => {
       uniform vec2 u_resolution;
       void main() {
         vec2 st = gl_FragCoord.xy / u_resolution;
-        float color = 0.5 + 0.5 * sin(st.x * 10.0 + u_time - u_time * 0.1);
-        gl_FragColor = vec4(vec3(color), 1.0);
+        float radius = 0.05;
+        vec2 center = vec2(st.x, mod(st.y - u_time * 0.001, 1.0));
+        float dist = distance(st, center);
+        float alpha = smoothstep(radius, radius - 0.01, dist);
+        gl_FragColor = vec4(vec3(1.0), alpha);
       }
     `;
 
@@ -98,6 +101,8 @@ const Home: FC = () => {
     function render(time) {
       gl.uniform1f(timeLocation, time * 0.001);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+      gl.clearColor(0.1, 0.1, 0.1, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       requestAnimationFrame(render);
     }
