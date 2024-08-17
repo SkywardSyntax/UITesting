@@ -1,5 +1,6 @@
 import { useCallback, useState, FC } from 'react'
 import Button from './Button'
+import GlassChip from './GlassChip'
 
 const ClickCount: FC = () => {
   const [count, setCount] = useState<number>(0)
@@ -7,7 +8,11 @@ const ClickCount: FC = () => {
     setCount((v) => v + 1)
   }, [setCount])
 
-  return <Button onClick={increment}>Clicks: {count}</Button>
+  return (
+    <GlassChip>
+      <Button onClick={increment}>Clicks: {count}</Button>
+    </GlassChip>
+  )
 }
 
 export default ClickCount

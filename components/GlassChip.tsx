@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './GlassChip.module.css';
 
-const GlassChip = ({ children }) => {
+const GlassChip: FC = ({ children }) => {
   return <div className={styles.glassChip}>{children}</div>;
 };
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, FC } from 'react'
 import Button from '../components/Button'
 import ClickCount from '../components/ClickCount'
+import GlassChip from '../components/GlassChip'
 import styles from '../styles/home.module.css'
 
 function throwError() {
@@ -108,34 +109,40 @@ const Home: FC = () => {
         state.
       </p>
       <hr className={styles.hr} />
-      <div>
-        <p>
-          Auto incrementing value. The counter won't reset after edits or if
-          there are errors.
-        </p>
-        <p>Current value: {count}</p>
-      </div>
+      <GlassChip>
+        <div>
+          <p>
+            Auto incrementing value. The counter won't reset after edits or if
+            there are errors.
+          </p>
+          <p>Current value: {count}</p>
+        </div>
+      </GlassChip>
       <hr className={styles.hr} />
-      <div>
-        <p>Component with state.</p>
-        <ClickCount />
-      </div>
+      <GlassChip>
+        <div>
+          <p>Component with state.</p>
+          <ClickCount />
+        </div>
+      </GlassChip>
       <hr className={styles.hr} />
-      <div>
-        <p>
-          The button below will throw 2 errors. You'll see the error overlay to
-          let you know about the errors but it won't break the page or reset
-          your state.
-        </p>
-        <Button
-          onClick={(e) => {
-            setTimeout(() => document.parentNode(), 0)
-            throwError()
-          }}
-        >
-          Throw an Error
-        </Button>
-      </div>
+      <GlassChip>
+        <div>
+          <p>
+            The button below will throw 2 errors. You'll see the error overlay to
+            let you know about the errors but it won't break the page or reset
+            your state.
+          </p>
+          <Button
+            onClick={(e) => {
+              setTimeout(() => document.parentNode(), 0)
+              throwError()
+            }}
+          >
+            Throw an Error
+          </Button>
+        </div>
+      </GlassChip>
       <hr className={styles.hr} />
     </main>
   )
