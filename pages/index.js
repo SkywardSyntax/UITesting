@@ -27,6 +27,79 @@ function Home() {
     }
   }, [increment])
 
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'backgroundCanvas';
+    document.body.appendChild(canvas);
+    const gl = canvas.getContext('webgl');
+
+    if (!gl) {
+      console.error('WebGL not supported');
+      return;
+    }
+
+    const vertexShaderSource = `
+      attribute vec4 a_position;
+      void main() {
+        gl_Position = a_position;
+      }
+    `;
+
+    const fragmentShaderSource = `
+      precision mediump float;
+      uniform float u_time;
+      void main() {
+        vec2 st = gl_FragCoord.xy / vec2(800.0, 600.0);
+        float color = 0.5 + 0.5 * sin(st.x * 10.0 + u_time);
+        gl_FragColor = vec4(vec3(color), 1.0);
+      }
+    `;
+
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertexShader, vertexShaderSource);
+    gl.compileShader(vertexShader);
+
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragmentShader, fragmentShaderSource);
+    gl.compileShader(fragmentShader);
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    gl.useProgram(program);
+
+    const positionLocation = gl.getAttribLocation(program, 'a_position');
+    const timeLocation = gl.getUniformLocation(program, 'u_time');
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1, -1,
+      1, -1,
+      -1, 1,
+      -1, 1,
+      1, -1,
+      1, 1,
+    ]), gl.STATIC_DRAW);
+
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    function render(time) {
+      gl.uniform1f(timeLocation, time * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+
+    return () => {
+      document.body.removeChild(canvas);
+    };
+  }, []);
+
   return (
     <main className={styles.main}>
       <h1>Fast Refresh Demo</h1>

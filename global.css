@@ -11,4 +11,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   hyphens: auto;
+  background-color: #121212; /* Dark background color */
+  color: #e0e0e0; /* Light text color */
 }
