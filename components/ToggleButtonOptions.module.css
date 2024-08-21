@@ -1,0 +1,15 @@
+.toggleButtonOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggleButton input {
+  margin-right: 10px;
+}

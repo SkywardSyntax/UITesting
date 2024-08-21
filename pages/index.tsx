@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState, FC } from 'react'
 import Button from '../components/Button'
 import ClickCount from '../components/ClickCount'
 import GlassChip from '../components/GlassChip'
+import ToggleSwitch from '../components/ToggleSwitch'
+import ToggleButtonOptions from '../components/ToggleButtonOptions'
 import styles from '../styles/home.module.css'
 import * as THREE from 'three';
 
@@ -100,6 +102,22 @@ const Home: FC = () => {
     };
   }, []);
 
+  const [toggleSwitchChecked, setToggleSwitchChecked] = useState(false);
+  const handleToggleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setToggleSwitchChecked(event.target.checked);
+  };
+
+  const [selectedToggleButtonOption, setSelectedToggleButtonOption] = useState('option1');
+  const handleToggleButtonOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedToggleButtonOption(event.target.value);
+  };
+
+  const toggleButtonOptions = [
+    { label: 'Option 1', value: 'option1' },
+    { label: 'Option 2', value: 'option2' },
+    { label: 'Option 3', value: 'option3' },
+  ];
+
   return (
     <main className={styles.main}>
       <h1>Fast Refresh Demo</h1>
@@ -141,6 +159,24 @@ const Home: FC = () => {
           >
             Throw an Error
           </Button>
+        </div>
+      </GlassChip>
+      <hr className={styles.hr} />
+      <GlassChip>
+        <div>
+          <p>Toggle Switch:</p>
+          <ToggleSwitch checked={toggleSwitchChecked} onChange={handleToggleSwitchChange} />
+        </div>
+      </GlassChip>
+      <hr className={styles.hr} />
+      <GlassChip>
+        <div>
+          <p>Toggle Button Options:</p>
+          <ToggleButtonOptions
+            options={toggleButtonOptions}
+            selectedValue={selectedToggleButtonOption}
+            onChange={handleToggleButtonOptionChange}
+          />
         </div>
       </GlassChip>
       <hr className={styles.hr} />
