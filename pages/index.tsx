@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, FC } from 'react'
+import { useCallback, useEffect, useState, FC, ChangeEvent } from 'react'
 import Button from '../components/Button'
 import ClickCount from '../components/ClickCount'
 import GlassChip from '../components/GlassChip'
@@ -10,7 +10,7 @@ import * as THREE from 'three';
 function throwError() {
   console.log(
     // The function body() is not defined
-    document.body()
+    document.body
   )
 }
 
@@ -153,7 +153,7 @@ const Home: FC = () => {
           </p>
           <Button
             onClick={(e) => {
-              setTimeout(() => document.parentNode(), 0)
+              setTimeout(() => document.parentNode, 0)
               throwError()
             }}
           >
