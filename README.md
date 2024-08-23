@@ -12,5 +12,8 @@ To run this application:
 npm run dev
 ```
 
-
 ![Demo](image.png)
+
+## Demo Page
+
+Check out the demo page [here](https://skywardsyntax.github.io/UITesting/).
